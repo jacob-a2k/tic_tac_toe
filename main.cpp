@@ -10,6 +10,7 @@ char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board();        // pokazujemy plansze z uzupelnionymi polami
+void set_to_board_if_number(int choosen_number);    // wpisuje do odpowiedniego indeksu zaleznie od wybranego numeru
 void set_to_board(int choosen_number);      // zpisz x lub o do odpowiedniego indeksu talicy
 void change_player();   // nastepuje zmiana gracza
 void test_if_win();     // sprawdza czy juz ktos wygral
@@ -91,107 +92,26 @@ void change_player(){
 }
 
 
+void set_to_board_if_number(int choosen_number){
+	int i = choosen_number - 1;
+	if(tab[i] != 'o' && tab[i] != 'x'){
+		tab[i] = o_or_x;
+		correct_number = true;
+		change_player();
+	}
+	else{
+		cout << "Bledny ruch\n";
+		correct_number = false;
+	}
+}
+
+
 void set_to_board( int choosen_number ){
-    if( choosen_number == 1 ){
-            if( tab[0] != 'o' && tab[0] != 'x'){
-                tab[0] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 2){
-        if( tab[1] != 'o' && tab[1] != 'x'){
-                tab[1] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 3){
-        if( tab[2] != 'o' && tab[2] != 'x'){
-                tab[2] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 4){
-        if( tab[3] != 'o' && tab[3] != 'x'){
-                tab[3] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else
-                {
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 5){
-        if( tab[4] != 'o' && tab[4] != 'x'){
-                tab[4] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 6){
-        if( tab[5] != 'o' && tab[5] != 'x'){
-                tab[5] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 7){
-        if( tab[6] != 'o' && tab[6] != 'x'){
-                tab[6] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 8){
-        if( tab[7] != 'o' && tab[7] != 'x'){
-                tab[7] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
-    else if( choosen_number == 9){
-        if( tab[8] != 'o' && tab[8] != 'x'){
-                tab[8] = o_or_x;
-                correct_number = true;
-                change_player();
-            }
-            else{
-                cout << "Bledny ruch\n";
-                correct_number = false;
-            }
-    }
+    for(int i = 1; i < 10; i++){
+		if(choosen_number == i){
+			set_to_board_if_number(choosen_number);
+		}
+	}
 }
 
 
