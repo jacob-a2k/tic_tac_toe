@@ -13,7 +13,7 @@ void draw_a_board();        // pokazujemy plansze z uzupelnionymi polami
 void set_to_board(int choosen_number);      // zpisz x lub o do odpowiedniego indeksu talicy
 void change_player();   // nastepuje zmiana gracza
 void test_if_win();     // sprawdza czy juz ktos wygral
-//void clear_board();     // czysci tablice przed kolejna rozgrywka
+void clear_board();     // czysci tablice przed kolejna rozgrywka
 
 int main(){
     for(;;){
@@ -48,7 +48,7 @@ int main(){
         cout << "=================================\n";
         }
 
-    //draw_a_board() = clear_board();
+    clear_board();
 
     }
     return 0;
@@ -214,19 +214,20 @@ void test_if_win(){
             }
             else{
                 cout << "\n=================================\n";
-                cout << "Wygral +\n";
+                cout << "Wygral x\n";
                 cout << "=================================\n";
                 we_have_a_winer = true;
             }
         }
 }
 
-/*
+
 void clear_board(){
     for(int i = 0; i < 9; i++){
         tab[i] = ' ';
     }
-}*/
+    we_have_a_winer = false;
+}
 
 
 
