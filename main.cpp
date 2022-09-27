@@ -5,9 +5,9 @@ using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-void set_to_board_if_number(int choosen_number, bool & correct_number, char & o_or_x, char tab[]);    // wpisuje do odpowiedniego indeksu zaleznie od wybranego numeru
+void set_to_board_if_number_and_change_player(int choosen_number, bool & correct_number, char & o_or_x, char tab[]);    // wpisuje do odpowiedniego indeksu zaleznie od wybranego numeru
+                                                                                                                        // nastepuje zmiana gracza
 void set_to_board(int choosen_number, bool & correct_number, char & o_or_x, char tab[]);      // zpisz x lub o do odpowiedniego indeksu talicy
-//void change_player(char & o_or_x);   // nastepuje zmiana gracza
 void test_if_win(bool & we_have_a_winer, char & o_or_x, char tab[]);     // sprawdza czy juz ktos wygral
 void clear_board(bool & we_have_a_winer, char tab[]);     // czysci tablice przed kolejna rozgrywka
 
@@ -85,15 +85,8 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-/*
-void change_player(char & o_or_x){
-    if( o_or_x == 'x') o_or_x ='o';
-    else o_or_x = 'x';
-}
-*/
 
-
-void set_to_board_if_number(int choosen_number, bool &correct_number, char & o_or_x, char tab[]){
+void set_to_board_if_number_and_change_player(int choosen_number, bool &correct_number, char & o_or_x, char tab[]){
 	int i = choosen_number - 1;
 	if(tab[i] != 'o' && tab[i] != 'x'){
 		tab[i] = o_or_x;
@@ -111,7 +104,7 @@ void set_to_board_if_number(int choosen_number, bool &correct_number, char & o_o
 void set_to_board( int choosen_number, bool & correct_number, char & o_or_x, char tab[]){
     for(int i = 1; i < 10; i++){
 		if(choosen_number == i){
-			set_to_board_if_number(choosen_number, correct_number, o_or_x, tab);
+			set_to_board_if_number_and_change_player(choosen_number, correct_number, o_or_x, tab);
 		}
 	}
 }
