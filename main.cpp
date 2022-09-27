@@ -4,14 +4,13 @@
 using namespace std;
 
 bool we_have_a_winer;       // zwraca tru jak ktos wygra
-bool correct_number;        // prawda gdy wybrany numer nie byl jeszcze wybierany
 char o_or_x;                // przechowuje znak kolka lub krzyzyka
 char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board();        // pokazujemy plansze z uzupelnionymi polami
-void set_to_board_if_number(int choosen_number);    // wpisuje do odpowiedniego indeksu zaleznie od wybranego numeru
-void set_to_board(int choosen_number);      // zpisz x lub o do odpowiedniego indeksu talicy
+void set_to_board_if_number(int choosen_number, bool & correct_number);    // wpisuje do odpowiedniego indeksu zaleznie od wybranego numeru
+void set_to_board(int choosen_number, bool & correct_number);      // zpisz x lub o do odpowiedniego indeksu talicy
 void change_player();   // nastepuje zmiana gracza
 void test_if_win();     // sprawdza czy juz ktos wygral
 void clear_board();     // czysci tablice przed kolejna rozgrywka
@@ -22,6 +21,9 @@ int main(){
         o_or_x = 'o';
 
         for( char i = 1; i < 10; i++ ){
+
+            bool correct_number;    // prawda gdy wybrany numer nie byl jeszcze wybierany
+
             do{
                 cout << endl;
                 show_available_options();
@@ -32,7 +34,7 @@ int main(){
                 int choosen_number;
                 cin >> choosen_number;
 
-                set_to_board( choosen_number );
+                set_to_board( choosen_number, correct_number );
                 if(correct_number == false) {
                     i--;
                 }
@@ -92,7 +94,7 @@ void change_player(){
 }
 
 
-void set_to_board_if_number(int choosen_number){
+void set_to_board_if_number(int choosen_number, bool &correct_number){
 	int i = choosen_number - 1;
 	if(tab[i] != 'o' && tab[i] != 'x'){
 		tab[i] = o_or_x;
@@ -106,10 +108,10 @@ void set_to_board_if_number(int choosen_number){
 }
 
 
-void set_to_board( int choosen_number ){
+void set_to_board( int choosen_number, bool &correct_number){
     for(int i = 1; i < 10; i++){
 		if(choosen_number == i){
-			set_to_board_if_number(choosen_number);
+			set_to_board_if_number(choosen_number, correct_number);
 		}
 	}
 }
