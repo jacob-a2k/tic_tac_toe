@@ -29,10 +29,8 @@ int main(){
 				cout << "\nWybierz od 1 do 9\n";
 				int choosen_number;
                 cin >> choosen_number;
-                if(choosen_number < 1 || choosen_number > 9){
-                    cout << "Bledny ruch!\n";
-                    i--;
-                }
+
+
 				int index = choosen_number - 1;
 				our_sign = set_to_board(choosen_number, tab, o_or_x);
 				if(our_sign != 'f'){
@@ -40,7 +38,6 @@ int main(){
 				}
 				else{
 					cout << "Bledny ruch!\n";
-					i--;
 				}
 			}while(our_sign == 'f');
 
@@ -110,9 +107,13 @@ char set_to_board(int choosen_number,char tab[], char o_or_x){
 	for(int i = 1; i < 10; i++){
 		if(choosen_number == i){
 			sign = if_slot_is_empty(choosen_number, tab, o_or_x) ;
+			return sign;
+		}
+		else if( choosen_number < 1 || choosen_number > 9){
+            sign = 'f';
+            return sign;
 		}
 	}
-	return sign;
 }
 
 
