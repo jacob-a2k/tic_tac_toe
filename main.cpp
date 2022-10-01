@@ -5,54 +5,55 @@ using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-void set_to_board_if_number_and_change_player(int choosen_number, bool & correct_number, char & o_or_x, char tab[]);    // wpisuje do odpowiedniego indeksu zaleznie od wybranego numeru
-                                                                                                                        // nastepuje zmiana gracza
-void set_to_board(int choosen_number, bool & correct_number, char & o_or_x, char tab[]);      // zpisz x lub o do odpowiedniego indeksu talicy
-void test_if_win(bool & we_have_a_winer, char & o_or_x, char tab[]);     // sprawdza czy juz ktos wygral
-void clear_board(bool & we_have_a_winer, char tab[]);     // czysci tablice przed kolejna rozgrywka
+char set_to_board(int choosen_number,char tab[], char o_or_x);
+char if_slot_is_empty(int choosen_number, char tab[], char o_or_x);
+char change_player(char o_or_x);
+bool test_if_win(char o_or_x, char tab[]);
+void clear_board(char tab[]);
 
 int main(){
-    for(;;){
+	for(;;){
 
-        bool we_have_a_winer;       // zwraca tru jak ktos wygra
-        char o_or_x = 'o';          // przechowuje znak kolka lub krzyzyka
-        char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
+		char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
+		char o_or_x ;
 
-        for( char i = 1; i < 10; i++ ){
+		for(char i = 1; i < 10; i++){
+			o_or_x = change_player(o_or_x);
+            char our_sign;
+			do{
+				cout << endl;
+				show_available_options();
+				cout << endl;
+				draw_a_board(tab);
+				cout << "\nWybierz od 1 do 9\n";
+				int choosen_number;
+				cin >> choosen_number;
 
-            bool correct_number;    // prawda gdy wybrany numer nie byl jeszcze wybierany
+				int index = choosen_number - 1;
+				our_sign = set_to_board(choosen_number, tab, o_or_x);
+				if(our_sign != 'f'){
+					tab[index] = our_sign;
+				}
+				else{
+					cout << "Bledny ruch!\n";
+					i--;
+				}
+			}while(our_sign == 'f');
 
-            do{
-                cout << endl;
-                show_available_options();
-                cout << endl;
-                draw_a_board(tab);
+			if(test_if_win(o_or_x, tab) == true){
+				break;
+			}
+		}
+		if(test_if_win(o_or_x, tab) != true){
+	        	cout << "\n=================================\n";
+        		cout << "Remis\n";
+        		cout << "=================================\n";
+		}
 
-                cout << "\nWybierz od 1 do 9\n";
-                int choosen_number;
-                cin >> choosen_number;
+		clear_board(tab);
 
-                set_to_board( choosen_number, correct_number, o_or_x, tab );
-                if(correct_number == false) {
-                    i--;
-                }
-            }while(correct_number != true);
-
-            test_if_win(we_have_a_winer, o_or_x, tab);
-            if(we_have_a_winer == true){
-                break;
-            }
-        }
-        if(we_have_a_winer != true){
-        cout << "\n=================================\n";
-        cout << "Remis\n";
-        cout << "=================================\n";
-        }
-
-    clear_board(we_have_a_winer, tab);
-
-    }
-    return 0;
+	}
+	return 0;
 }
 
 
@@ -86,31 +87,38 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
 }
 
 
-void set_to_board_if_number_and_change_player(int choosen_number, bool &correct_number, char & o_or_x, char tab[]){
-	int i = choosen_number - 1;
+char if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
+	char sign;
+	int  i = choosen_number - 1;
 	if(tab[i] != 'o' && tab[i] != 'x'){
-		tab[i] = o_or_x;
-		correct_number = true;
-		if( o_or_x == 'x') o_or_x ='o';
-        else o_or_x = 'x';
+		sign = o_or_x;
+		return sign;
 	}
 	else{
-		cout << "Bledny ruch\n";
-		correct_number = false;
+		sign = 'f';
+		return sign;
 	}
 }
 
 
-void set_to_board( int choosen_number, bool & correct_number, char & o_or_x, char tab[]){
-    for(int i = 1; i < 10; i++){
+char set_to_board(int choosen_number,char tab[], char o_or_x){
+	char sign;
+	for(int i = 1; i < 10; i++){
 		if(choosen_number == i){
-			set_to_board_if_number_and_change_player(choosen_number, correct_number, o_or_x, tab);
+			sign = if_slot_is_empty(choosen_number, tab, o_or_x) ;
 		}
 	}
+	return sign;
 }
 
 
-void test_if_win(bool & we_have_a_winer, char & o_or_x, char tab[]){
+char change_player(char o_or_x){
+	if(o_or_x == 'o') return 'x';
+	else return 'o';
+}
+
+
+bool test_if_win(char o_or_x, char tab[]){
     if( tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == 'o' || tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == 'x' ||
         tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == 'o' || tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == 'x' ||
         tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == 'o' || tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == 'x' ||
@@ -120,29 +128,33 @@ void test_if_win(bool & we_have_a_winer, char & o_or_x, char tab[]){
         tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == 'o' || tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == 'x' ||
         tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == 'o' || tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == 'x' ){
 
-            draw_a_board(tab);
-            if( o_or_x == 'x') {
-                cout << "\n=================================\n";
-                cout << "Wygral o\n";
-                cout << "=================================\n";
-                we_have_a_winer = true;
-            }
-            else{
-                cout << "\n=================================\n";
-                cout << "Wygral x\n";
-                cout << "=================================\n";
-                we_have_a_winer = true;
-            }
-        }
+		draw_a_board(tab);
+            	if( o_or_x == 'x') {
+                	cout << "\n=================================\n";
+                	cout << "Wygral x\n";
+                	cout << "=================================\n";
+                	return true;
+            	}
+            	else if( o_or_x == 'o'){
+              	  	cout << "\n=================================\n";
+              	  	cout << "Wygral o\n";
+                	cout << "=================================\n";
+                	return true;
+            	}
+            	else{
+            		return false;
+            	}
+		}
+
 }
 
 
-void clear_board(bool & we_have_a_winer, char tab[]){
-    for(int i = 0; i < 9; i++){
-        tab[i] = ' ';
-    }
-    we_have_a_winer = false;
+void clear_board(char tab[]){
+	for(int i = 0; i < 9; i++){
+		tab[i] = ' ';
+	}
 }
+
 
 
 
