@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <limits>
 
 using namespace std;
 
@@ -27,8 +28,11 @@ int main(){
 				draw_a_board(tab);
 				cout << "\nWybierz od 1 do 9\n";
 				int choosen_number;
-				cin >> choosen_number;
-
+                cin >> choosen_number;
+                if(choosen_number < 1 || choosen_number > 9){
+                    cout << "Bledny ruch!\n";
+                    i--;
+                }
 				int index = choosen_number - 1;
 				our_sign = set_to_board(choosen_number, tab, o_or_x);
 				if(our_sign != 'f'){
@@ -90,7 +94,7 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
 char if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
 	char sign;
 	int  i = choosen_number - 1;
-	if(tab[i] != 'o' && tab[i] != 'x'){
+	if(tab[i] != 'o' && tab[i] != 'x'){     //warunek sprawdzajacy czy w polu jest znak
 		sign = o_or_x;
 		return sign;
 	}
@@ -135,17 +139,13 @@ bool test_if_win(char o_or_x, char tab[]){
                 	cout << "=================================\n";
                 	return true;
             	}
-            	else if( o_or_x == 'o'){
+            	else{
               	  	cout << "\n=================================\n";
               	  	cout << "Wygral o\n";
                 	cout << "=================================\n";
                 	return true;
             	}
-            	else{
-            		return false;
-            	}
 		}
-
 }
 
 
@@ -154,6 +154,7 @@ void clear_board(char tab[]){
 		tab[i] = ' ';
 	}
 }
+
 
 
 
