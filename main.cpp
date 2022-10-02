@@ -8,10 +8,10 @@ void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
 char set_to_board(int choosen_number,char tab[], char o_or_x);
 char if_slot_is_empty(int choosen_number, char tab[], char o_or_x);
-char change_player(char o_or_x);
-bool test_if_win(char o_or_x, char tab[]);
+char ctest_if_win(char o_or_x, char tab[]);
 void clear_board(char tab[]);
-
+hange_player(char o_or_x);
+bool 
 int main(){
 	for(;;){
 
@@ -87,7 +87,7 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-
+// @mwrona przerób, żeby ta fukcja zwracała bool'a
 char if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
 	char sign;
 	int  i = choosen_number - 1;
@@ -101,6 +101,7 @@ char if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
 	}
 }
 
+// @mwrona przerób, żeby ta fukcja zwracała bool'a
 
 char set_to_board(int choosen_number,char tab[], char o_or_x){
 	char sign;
@@ -109,6 +110,7 @@ char set_to_board(int choosen_number,char tab[], char o_or_x){
 			sign = if_slot_is_empty(choosen_number, tab, o_or_x) ;
 			return sign;
 		}
+		// @mwrona sprawdzanie zakresu powinno być wcześniej bo ta petla bez sensu kreci 9 razy
 		else if( choosen_number < 1 || choosen_number > 9){
             sign = 'f';
             return sign;
