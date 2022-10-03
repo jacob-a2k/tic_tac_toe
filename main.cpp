@@ -1,17 +1,17 @@
 #include <iostream>
 #include <stdlib.h>
-#include <limits>
 
 using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-char set_to_board(int choosen_number,char tab[], char o_or_x);
-char if_slot_is_empty(int choosen_number, char tab[], char o_or_x);
-char ctest_if_win(char o_or_x, char tab[]);
+bool set_to_board(int choosen_number,char tab[], char o_or_x);
+bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x);
+bool test_if_win(char o_or_x, char tab[]);
 void clear_board(char tab[]);
-hange_player(char o_or_x);
-bool 
+char change_player(char o_or_x);
+
+
 int main(){
 	for(;;){
 
@@ -20,7 +20,7 @@ int main(){
 
 		for(char i = 1; i < 10; i++){
 			o_or_x = change_player(o_or_x);
-            char our_sign;
+            bool our_sign;
 			do{
 				cout << endl;
 				show_available_options();
@@ -28,18 +28,17 @@ int main(){
 				draw_a_board(tab);
 				cout << "\nWybierz od 1 do 9\n";
 				int choosen_number;
-                cin >> choosen_number;
-
+                 cin >> choosen_number;
 
 				int index = choosen_number - 1;
 				our_sign = set_to_board(choosen_number, tab, o_or_x);
-				if(our_sign != 'f'){
-					tab[index] = our_sign;
+				if(our_sign == true){
+					tab[index] = o_or_x;
 				}
-				else{
+				else if(our_sign == false){
 					cout << "Bledny ruch!\n";
 				}
-			}while(our_sign == 'f');
+			}while(our_sign == false);
 
 			if(test_if_win(o_or_x, tab) == true){
 				break;
@@ -87,34 +86,30 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-// @mwrona przerób, żeby ta fukcja zwracała bool'a
-char if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
-	char sign;
+
+bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
+
 	int  i = choosen_number - 1;
 	if(tab[i] != 'o' && tab[i] != 'x'){     //warunek sprawdzajacy czy w polu jest znak
-		sign = o_or_x;
-		return sign;
+		return true;
 	}
 	else{
-		sign = 'f';
-		return sign;
+		return false;
 	}
 }
 
-// @mwrona przerób, żeby ta fukcja zwracała bool'a
 
-char set_to_board(int choosen_number,char tab[], char o_or_x){
-	char sign;
-	for(int i = 1; i < 10; i++){
-		if(choosen_number == i){
-			sign = if_slot_is_empty(choosen_number, tab, o_or_x) ;
-			return sign;
+bool set_to_board(int choosen_number,char tab[], char o_or_x){
+
+	if(choosen_number > 0 && choosen_number < 10 ){         // sprawdzanie zakresu wybranej liczby
+        for(int i = 1; i < 10; i++){
+            if(choosen_number == i){
+                return if_slot_is_empty(choosen_number, tab, o_or_x);
+            }
 		}
-		// @mwrona sprawdzanie zakresu powinno być wcześniej bo ta petla bez sensu kreci 9 razy
-		else if( choosen_number < 1 || choosen_number > 9){
-            sign = 'f';
-            return sign;
-		}
+	}
+	else{
+        return false;
 	}
 }
 
