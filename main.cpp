@@ -32,12 +32,11 @@ int main(){
 
 				int index = choosen_number - 1;
 				our_sign = set_to_board(choosen_number, tab);
-                // @abram teraz ok ?
+
 				if(our_sign){
 					tab[index] = o_or_x;
 				}
-				// @mwrona po prostu else nie musisz pisać warunku w drugą stronę
-				else if(!our_sign){
+				else{
 					cout << "Bledny ruch!\n";
 				}
 			}while(our_sign == false);
