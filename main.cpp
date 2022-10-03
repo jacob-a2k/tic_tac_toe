@@ -36,6 +36,7 @@ int main(){
 				if(our_sign){
 					tab[index] = o_or_x;
 				}
+				// @mwrona po prostu else nie musisz pisać warunku w drugą stronę
 				else if(!our_sign){
 					cout << "Bledny ruch!\n";
 				}
