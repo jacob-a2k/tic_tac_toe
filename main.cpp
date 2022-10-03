@@ -32,11 +32,11 @@ int main(){
 
 				int index = choosen_number - 1;
 				our_sign = set_to_board(choosen_number, tab);
-                // @mwrona uprość tego całego if'a
+                // @abram teraz ok ?
 				if(our_sign){
 					tab[index] = o_or_x;
 				}
-				else if(our_sign == false){
+				else if(!our_sign){
 					cout << "Bledny ruch!\n";
 				}
 			}while(our_sign == false);
