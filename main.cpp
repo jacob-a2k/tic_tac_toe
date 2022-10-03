@@ -86,7 +86,7 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-
+// @mwrona po co Ci parametr o_or_x nie wyokrzystujesz go w tej fukcji
 bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
 
 	int  i = choosen_number - 1;
@@ -102,6 +102,7 @@ bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
 bool set_to_board(int choosen_number,char tab[], char o_or_x){
 
 	if(choosen_number > 0 && choosen_number < 10 ){         // sprawdzanie zakresu wybranej liczby
+	    // @mwrona po co Ci ta pętla
         for(int i = 1; i < 10; i++){
             if(choosen_number == i){
                 return if_slot_is_empty(choosen_number, tab, o_or_x);
