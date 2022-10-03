@@ -5,8 +5,8 @@ using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-bool set_to_board(int choosen_number,char tab[], char o_or_x);
-bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x);
+bool set_to_board(int choosen_number,char tab[]);
+bool if_slot_is_empty(int choosen_number, char tab[]);
 bool test_if_win(char o_or_x, char tab[]);
 void clear_board(char tab[]);
 char change_player(char o_or_x);
@@ -31,7 +31,7 @@ int main(){
                  cin >> choosen_number;
 
 				int index = choosen_number - 1;
-				our_sign = set_to_board(choosen_number, tab, o_or_x);
+				our_sign = set_to_board(choosen_number, tab);
 				if(our_sign == true){
 					tab[index] = o_or_x;
 				}
@@ -86,8 +86,8 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-// @mwrona po co Ci parametr o_or_x nie wyokrzystujesz go w tej fukcji
-bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
+
+bool if_slot_is_empty(int choosen_number, char tab[]){
 
 	int  i = choosen_number - 1;
 	if(tab[i] != 'o' && tab[i] != 'x'){     //warunek sprawdzajacy czy w polu jest znak
@@ -99,15 +99,10 @@ bool if_slot_is_empty(int choosen_number, char tab[], char o_or_x){
 }
 
 
-bool set_to_board(int choosen_number,char tab[], char o_or_x){
+bool set_to_board(int choosen_number,char tab[]){
 
 	if(choosen_number > 0 && choosen_number < 10 ){         // sprawdzanie zakresu wybranej liczby
-	    // @mwrona po co Ci ta pętla
-        for(int i = 1; i < 10; i++){
-            if(choosen_number == i){
-                return if_slot_is_empty(choosen_number, tab, o_or_x);
-            }
-		}
+        return if_slot_is_empty(choosen_number, tab);
 	}
 	else{
         return false;
