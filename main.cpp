@@ -20,6 +20,7 @@ int main(){
 
 		for(char i = 1; i < 10; i++){
 			o_or_x = change_player(o_or_x);
+			// @mwrona postaraj się usunąć tę zmienną
             bool our_sign;
 			do{
 				cout << endl;
