@@ -32,6 +32,7 @@ int main(){
 
 				int index = choosen_number - 1;
 				our_sign = set_to_board(choosen_number, tab);
+				// @mwrona uprość tego if'a
 				if(our_sign == true){
 					tab[index] = o_or_x;
 				}
