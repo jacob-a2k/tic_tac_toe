@@ -16,13 +16,9 @@ int main(){
 	for(;;){
 
 		char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
-		char o_or_x ;
+		char o_or_x = 'o';
 
 		for(char i = 1; i < 10; i++){
-			o_or_x = change_player(o_or_x);
-			// @mwrona postaraj się usunąć tę zmienną
-            bool our_sign;
-			do{
 				cout << endl;
 				show_available_options();
 				cout << endl;
@@ -32,19 +28,20 @@ int main(){
                  cin >> choosen_number;
 
 				int index = choosen_number - 1;
-				our_sign = set_to_board(choosen_number, tab);
 
-				if(our_sign){
+				if(set_to_board(choosen_number, tab)){
 					tab[index] = o_or_x;
 				}
 				else{
 					cout << "Bledny ruch!\n";
+					i--;
+					continue;
 				}
-			}while(our_sign == false);
 
 			if(test_if_win(o_or_x, tab) == true){
 				break;
 			}
+			o_or_x = change_player(o_or_x);
 		}
 		if(test_if_win(o_or_x, tab) != true){
 	        	cout << "\n=================================\n";
