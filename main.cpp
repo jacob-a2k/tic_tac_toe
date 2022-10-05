@@ -15,18 +15,13 @@ void play_game(char tab[], char o_or_x);
 
 int main(){
 	for(;;){
-
 		char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 		char o_or_x = 'o';
-
 		play_game(tab, o_or_x);
-
 		clear_board(tab);
-
 	}
 	return 0;
 }
-
 
 void show_available_options(){      // Wyswietlenie tablicy z ponumerowanymi miejscami
     for(int i = 1; i < 10; i++){
@@ -42,7 +37,6 @@ void show_available_options(){      // Wyswietlenie tablicy z ponumerowanymi mie
     }
 }
 
-
 void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     for(int i = 0; i < 9; i++){
         if(i < 2 || i > 2 && i < 5 || i > 5 && i < 8){
@@ -57,12 +51,10 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-
 char change_player(char o_or_x){
 	if(o_or_x == 'o') return 'x';
 	else return 'o';
 }
-
 
 bool has_winner(char o_or_x, char tab[]){
     return  tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == o_or_x ||
@@ -76,7 +68,6 @@ bool has_winner(char o_or_x, char tab[]){
             tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == o_or_x ||
             tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == o_or_x;
 }
-
 
 void clear_board(char tab[]){
 	for(int i = 0; i < 9; i++){
@@ -113,15 +104,13 @@ int try_get_slot(char tab[]){
 }
 
 void do_move(char tab[], char o_or_x){
-        int slot = try_get_slot(tab);
-        tab[slot] = o_or_x;
+    int slot = try_get_slot(tab);
+    tab[slot] = o_or_x;
 }
 
 void play_game(char tab[], char o_or_x){
     for(char i = 1; i < 10; i++){
-
         do_move(tab, o_or_x);
-
         if(has_winner(o_or_x, tab)){
             draw_a_board(tab);
             cout << "\n=================================\n";
