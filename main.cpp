@@ -11,7 +11,7 @@ char change_player(char o_or_x);
 bool is_number_in_correct_range(int number);
 int try_get_slot(char tab[]);
 void do_move(char tab[], char o_or_x);
-
+void play_game(char tab[], char o_or_x);
 
 int main(){
 	for(;;){
@@ -19,20 +19,7 @@ int main(){
 		char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
 		char o_or_x = 'o';
 
-		for(char i = 1; i < 10; i++){
-
-            do_move(tab, o_or_x);
-
-			if(test_if_win(o_or_x, tab) == true){
-				break;
-			}
-			o_or_x = change_player(o_or_x);
-		}
-		if(test_if_win(o_or_x, tab) != true){
-	        	cout << "\n=================================\n";
-        		cout << "Remis\n";
-        		cout << "=================================\n";
-		}
+		play_game(tab, o_or_x);
 
 		clear_board(tab);
 
@@ -101,6 +88,7 @@ bool test_if_win(char o_or_x, char tab[]){
                 	return true;
             	}
 		}
+    return false;
 }
 
 
@@ -143,3 +131,17 @@ void do_move(char tab[], char o_or_x){
         tab[slot] = o_or_x;
 }
 
+void play_game(char tab[], char o_or_x){
+    for(char i = 1; i < 10; i++){
+
+        do_move(tab, o_or_x);
+
+        if(test_if_win(o_or_x, tab)){
+            return;
+        }
+        o_or_x = change_player(o_or_x);
+    }
+    cout << "\n=================================\n";
+    cout << "Remis\n";
+    cout << "=================================\n";
+}
