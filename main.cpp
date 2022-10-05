@@ -65,30 +65,16 @@ char change_player(char o_or_x){
 
 
 bool has_winner(char o_or_x, char tab[]){
-    if( tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == 'o' || tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == 'x' ||
-        tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == 'o' || tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == 'x' ||
-        tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == 'o' || tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == 'x' ||
-        tab[0] == tab[3] && tab[3] == tab[6] && tab[0] == 'o' || tab[0] == tab[3] && tab[3] == tab[6] && tab[0] == 'x' ||
-        tab[1] == tab[4] && tab[4] == tab[7] && tab[1] == 'o' || tab[1] == tab[4] && tab[4] == tab[7] && tab[1] == 'x' ||
-        tab[2] == tab[5] && tab[5] == tab[8] && tab[2] == 'o' || tab[2] == tab[5] && tab[5] == tab[8] && tab[2] == 'x' ||
-        tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == 'o' || tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == 'x' ||
-        tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == 'o' || tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == 'x' ){
+    return  tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == o_or_x ||
+            tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == o_or_x ||
+            tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == o_or_x ||
 
-		draw_a_board(tab);
-            	if( o_or_x == 'x') {
-                	cout << "\n=================================\n";
-                	cout << "Wygral x\n";
-                	cout << "=================================\n";
-                	return true;
-            	}
-            	else{
-              	  	cout << "\n=================================\n";
-              	  	cout << "Wygral o\n";
-                	cout << "=================================\n";
-                	return true;
-            	}
-		}
-    return false;
+            tab[0] == tab[3] && tab[3] == tab[6] && tab[0] == o_or_x ||
+            tab[1] == tab[4] && tab[4] == tab[7] && tab[1] == o_or_x ||
+            tab[2] == tab[5] && tab[5] == tab[8] && tab[2] == o_or_x ||
+
+            tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == o_or_x ||
+            tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == o_or_x;
 }
 
 
@@ -137,6 +123,10 @@ void play_game(char tab[], char o_or_x){
         do_move(tab, o_or_x);
 
         if(has_winner(o_or_x, tab)){
+            draw_a_board(tab);
+            cout << "\n=================================\n";
+            cout << "Wygral " << o_or_x << "!\n";
+            cout << "=================================\n";
             return;
         }
         o_or_x = change_player(o_or_x);
