@@ -97,7 +97,7 @@ bool if_slot_is_empty(int choosen_number, char tab[]){
 	}
 }
 
-
+// @mwrona wyrzuc te funkcje
 bool set_to_board(int choosen_number,char tab[]){
 
 	if(choosen_number > 0 && choosen_number < 10 ){         // sprawdzanie zakresu wybranej liczby
