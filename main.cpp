@@ -92,13 +92,8 @@ bool set_to_board_is_slot_empty(int choosen_number, char tab[]){
         if(tab[i] != 'o' && tab[i] != 'x'){             //warunek sprawdzajacy czy w polu jest znak
             return true;
         }
-        else{
-            return false;
-        }
     }
-    else{
-        return false;
-    }
+    return false;
 }
 
 
