@@ -3,27 +3,27 @@
 
 using namespace std;
 
-void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
-void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-bool has_winner(char o_or_x, char tab[]);
-void clear_board(char tab[]);
-char change_player(char o_or_x);
+void show_available_options();      // rysujemy szablon boardlicy z ponumerowanymi miejscami
+void draw_a_board(char board[]);        // pokazujemy plansze z uzupelnionymi polami
+bool has_winner(char player, char board[]);
+void clear_board(char board[]);
+char change_player(char player);
 bool is_number_in_correct_range(int number);
-int try_get_slot(char tab[]);
-void do_move(char tab[], char o_or_x);
-void play_game(char tab[], char o_or_x);
+int try_get_slot(char board[]);
+void do_move(char board[], char player);
+void play_game(char board[], char player);
 
 int main(){
 	for(;;){
-		char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
-		char o_or_x = 'o';
-		play_game(tab, o_or_x);
-		clear_board(tab);
+		char board[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
+		char player = 'o';
+		play_game(board, player);
+		clear_board(board);
 	}
 	return 0;
 }
 
-void show_available_options(){      // Wyswietlenie tablicy z ponumerowanymi miejscami
+void show_available_options(){      // Wyswietlenie boardlicy z ponumerowanymi miejscami
     for(int i = 1; i < 10; i++){
         if(i < 3 || i > 3 && i < 6 || i > 6 && i < 9){
             cout << i << " | ";
@@ -37,13 +37,13 @@ void show_available_options(){      // Wyswietlenie tablicy z ponumerowanymi mie
     }
 }
 
-void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
+void draw_a_board(char board[]){            // Wyswietlenie pustej planszy do gry
     for(int i = 0; i < 9; i++){
         if(i < 2 || i > 2 && i < 5 || i > 5 && i < 8){
-            cout << tab[i] << " | ";
+            cout << board[i] << " | ";
         }
         else if(i % 2 == 0 || i % 5 == 0){
-            cout << tab[i] << "\n";
+            cout << board[i] << "\n";
             if(i != 8){
                 cout << "---------\n";
             }
@@ -51,27 +51,27 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-char change_player(char o_or_x){
-	if(o_or_x == 'o') return 'x';
+char change_player(char player){
+	if(player == 'o') return 'x';
 	else return 'o';
 }
 
-bool has_winner(char o_or_x, char tab[]){
-    return  tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == o_or_x ||
-            tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == o_or_x ||
-            tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == o_or_x ||
+bool has_winner(char player, char board[]){
+    return  board[0] == board[1] && board[1] == board[2] && board[0] == player ||
+            board[3] == board[4] && board[4] == board[5] && board[3] == player ||
+            board[6] == board[7] && board[7] == board[8] && board[6] == player ||
 
-            tab[0] == tab[3] && tab[3] == tab[6] && tab[0] == o_or_x ||
-            tab[1] == tab[4] && tab[4] == tab[7] && tab[1] == o_or_x ||
-            tab[2] == tab[5] && tab[5] == tab[8] && tab[2] == o_or_x ||
+            board[0] == board[3] && board[3] == board[6] && board[0] == player ||
+            board[1] == board[4] && board[4] == board[7] && board[1] == player ||
+            board[2] == board[5] && board[5] == board[8] && board[2] == player ||
 
-            tab[0] == tab[4] && tab[4] == tab[8] && tab[0] == o_or_x ||
-            tab[2] == tab[4] && tab[4] == tab[6] && tab[2] == o_or_x;
+            board[0] == board[4] && board[4] == board[8] && board[0] == player ||
+            board[2] == board[4] && board[4] == board[6] && board[2] == player;
 }
 
-void clear_board(char tab[]){
+void clear_board(char board[]){
 	for(int i = 0; i < 9; i++){
-		tab[i] = ' ';
+		board[i] = ' ';
 	}
 }
 
@@ -79,12 +79,12 @@ bool is_number_in_correct_range(int number){
     return number > 0 && number < 10;
 }
 
-int try_get_slot(char tab[]){
+int try_get_slot(char board[]){
     for(;;){
         cout << endl;
         show_available_options();
         cout << endl;
-        draw_a_board(tab);
+        draw_a_board(board);
         cout << "\nWybierz od 1 do 9\n";
         int choosen_number;
         cin >> choosen_number;
@@ -95,7 +95,7 @@ int try_get_slot(char tab[]){
         }
         int index = choosen_number - 1;
 
-        if(tab[index] != ' '){
+        if(board[index] != ' '){
             cout << "Bledny ruch!\n";
             continue;
         }
@@ -103,22 +103,22 @@ int try_get_slot(char tab[]){
     }
 }
 
-void do_move(char tab[], char o_or_x){
-    int slot = try_get_slot(tab);
-    tab[slot] = o_or_x;
+void do_move(char board[], char player){
+    int slot = try_get_slot(board);
+    board[slot] = player;
 }
 
-void play_game(char tab[], char o_or_x){
+void play_game(char board[], char player){
     for(char i = 1; i < 10; i++){
-        do_move(tab, o_or_x);
-        if(has_winner(o_or_x, tab)){
-            draw_a_board(tab);
+        do_move(board, player);
+        if(has_winner(player, board)){
+            draw_a_board(board);
             cout << "\n=================================\n";
-            cout << "Wygral " << o_or_x << "!\n";
+            cout << "Wygral " << player << "!\n";
             cout << "=================================\n";
             return;
         }
-        o_or_x = change_player(o_or_x);
+        player = change_player(player);
     }
     cout << "\n=================================\n";
     cout << "Remis\n";
