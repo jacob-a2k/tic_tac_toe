@@ -9,6 +9,8 @@ bool test_if_win(char o_or_x, char tab[]);
 void clear_board(char tab[]);
 char change_player(char o_or_x);
 bool is_number_in_correct_range(int number);
+int try_get_slot(char tab[]);
+void do_move(char tab[], char o_or_x);
 
 
 int main(){
@@ -18,32 +20,8 @@ int main(){
 		char o_or_x = 'o';
 
 		for(char i = 1; i < 10; i++){
-				cout << endl;
-				show_available_options();
-				cout << endl;
-				draw_a_board(tab);
-				cout << "\nWybierz od 1 do 9\n";
-				int choosen_number;
-                cin >> choosen_number;
 
-                if(is_number_in_correct_range(choosen_number)){
-
-                    int index = choosen_number - 1;
-
-                    if(tab[index] == ' '){
-					tab[index] = o_or_x;
-                    }
-                    else{
-                        cout << "Bledny ruch!\n";
-                        i--;
-                        continue;
-                    }
-                }
-                else{
-                    cout << "Bledny ruch!\n";
-                        i--;
-                        continue;
-                }
+            do_move(tab, o_or_x);
 
 			if(test_if_win(o_or_x, tab) == true){
 				break;
@@ -136,7 +114,32 @@ bool is_number_in_correct_range(int number){
     return number > 0 && number < 10;
 }
 
+int try_get_slot(char tab[]){
+    for(;;){
+        cout << endl;
+        show_available_options();
+        cout << endl;
+        draw_a_board(tab);
+        cout << "\nWybierz od 1 do 9\n";
+        int choosen_number;
+        cin >> choosen_number;
 
+        if(!is_number_in_correct_range(choosen_number)){
+            cout << "Bledny ruch!\n";
+            continue;
+        }
+        int index = choosen_number - 1;
 
+        if(tab[index] != ' '){
+            cout << "Bledny ruch!\n";
+            continue;
+        }
+        return index;
+    }
+}
 
+void do_move(char tab[], char o_or_x){
+        int slot = try_get_slot(tab);
+        tab[slot] = o_or_x;
+}
 
