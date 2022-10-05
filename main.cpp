@@ -5,7 +5,7 @@ using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-bool set_to_board_is_slot_empty(int choosen_number,char tab[]);
+bool set_to_board_if_slot_empty(int choosen_number,char tab[]);
 bool test_if_win(char o_or_x, char tab[]);
 void clear_board(char tab[]);
 char change_player(char o_or_x);
@@ -24,18 +24,25 @@ int main(){
 				draw_a_board(tab);
 				cout << "\nWybierz od 1 do 9\n";
 				int choosen_number;
-                 cin >> choosen_number;
+                cin >> choosen_number;
+                if(choosen_number > 0 && choosen_number < 10){      // sprawdzanie zakresu wybranej liczby
 
-				int index = choosen_number - 1;
+                    int index = choosen_number - 1;
 
-				if(set_to_board_is_slot_empty(choosen_number, tab)){
+                    if(set_to_board_if_slot_empty(choosen_number, tab)){
 					tab[index] = o_or_x;
-				}
-				else{
-					cout << "Bledny ruch!\n";
-					i--;
-					continue;
-				}
+                    }
+                    else{
+                        cout << "Bledny ruch!\n";
+                        i--;
+                        continue;
+                    }
+                }
+                else{
+                    cout << "Bledny ruch!\n";
+                        i--;
+                        continue;
+                }
 
 			if(test_if_win(o_or_x, tab) == true){
 				break;
@@ -85,15 +92,15 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
 }
 
 // @mwrona tej fukcji nie mówiłem zebys zmienial
-bool set_to_board_is_slot_empty(int choosen_number, char tab[]){
+bool set_to_board_if_slot_empty(int choosen_number, char tab[]){
 
-    if(choosen_number > 0 && choosen_number < 10){      // sprawdzanie zakresu wybranej liczby
         int  i = choosen_number - 1;
         if(tab[i] != 'o' && tab[i] != 'x'){             //warunek sprawdzajacy czy w polu jest znak
             return true;
         }
-    }
-    return false;
+        else{
+            return false;
+        }
 }
 
 
