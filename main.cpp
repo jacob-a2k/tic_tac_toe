@@ -84,7 +84,7 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
     }
 }
 
-
+// @mwrona tej fukcji nie mówiłem zebys zmienial
 bool set_to_board_is_slot_empty(int choosen_number, char tab[]){
 
     if(choosen_number > 0 && choosen_number < 10){      // sprawdzanie zakresu wybranej liczby
