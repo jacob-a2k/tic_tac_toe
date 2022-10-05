@@ -3,8 +3,8 @@
 
 using namespace std;
 
-void show_available_options();      // rysujemy szablon boardlicy z ponumerowanymi miejscami
-void draw_a_board(char board[]);        // pokazujemy plansze z uzupelnionymi polami
+void show_available_options();
+void draw_a_board(char board[]);
 bool has_winner(char player, char board[]);
 char change_player(char player);
 bool is_number_in_correct_range(int number);
@@ -22,7 +22,7 @@ int main(){
 	return 0;
 }
 
-void show_available_options(){      // Wyswietlenie boardlicy z ponumerowanymi miejscami
+void show_available_options(){
     for(int i = 1; i < 10; i++){
         if(i < 3 || i > 3 && i < 6 || i > 6 && i < 9){
             cout << i << " | ";
@@ -36,7 +36,7 @@ void show_available_options(){      // Wyswietlenie boardlicy z ponumerowanymi m
     }
 }
 
-void draw_a_board(char board[]){            // Wyswietlenie pustej planszy do gry
+void draw_a_board(char board[]){
     for(int i = 0; i < 9; i++){
         if(i < 2 || i > 2 && i < 5 || i > 5 && i < 8){
             cout << board[i] << " | ";
@@ -51,8 +51,7 @@ void draw_a_board(char board[]){            // Wyswietlenie pustej planszy do gr
 }
 
 char change_player(char player){
-	if(player == 'o') return 'x';
-	else return 'o';
+    return player == 'o' ? 'x' : 'o';   // operator ternarny "? :"
 }
 
 bool has_winner(char player, char board[]){
