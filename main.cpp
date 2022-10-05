@@ -5,7 +5,7 @@ using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-bool test_if_win(char o_or_x, char tab[]);
+bool has_winner(char o_or_x, char tab[]);
 void clear_board(char tab[]);
 char change_player(char o_or_x);
 bool is_number_in_correct_range(int number);
@@ -64,7 +64,7 @@ char change_player(char o_or_x){
 }
 
 
-bool test_if_win(char o_or_x, char tab[]){
+bool has_winner(char o_or_x, char tab[]){
     if( tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == 'o' || tab[0] == tab[1] && tab[1] == tab[2] && tab[0] == 'x' ||
         tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == 'o' || tab[3] == tab[4] && tab[4] == tab[5] && tab[3] == 'x' ||
         tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == 'o' || tab[6] == tab[7] && tab[7] == tab[8] && tab[6] == 'x' ||
@@ -136,7 +136,7 @@ void play_game(char tab[], char o_or_x){
 
         do_move(tab, o_or_x);
 
-        if(test_if_win(o_or_x, tab)){
+        if(has_winner(o_or_x, tab)){
             return;
         }
         o_or_x = change_player(o_or_x);
