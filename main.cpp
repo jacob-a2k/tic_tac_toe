@@ -6,19 +6,18 @@ using namespace std;
 void show_available_options();      // rysujemy szablon boardlicy z ponumerowanymi miejscami
 void draw_a_board(char board[]);        // pokazujemy plansze z uzupelnionymi polami
 bool has_winner(char player, char board[]);
-void clear_board(char board[]);
 char change_player(char player);
 bool is_number_in_correct_range(int number);
 int try_get_slot(char board[]);
 void do_move(char board[], char player);
-void play_game(char board[], char player);
+void play_game(char board[], char start_player);
 
 int main(){
+    char start_player = 'o';
 	for(;;){
 		char board[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
-		char player = 'o';
-		play_game(board, player);
-		clear_board(board);
+		play_game(board, start_player);
+		start_player = change_player(start_player);
 	}
 	return 0;
 }
@@ -69,12 +68,6 @@ bool has_winner(char player, char board[]){
             board[2] == board[4] && board[4] == board[6] && board[2] == player;
 }
 
-void clear_board(char board[]){
-	for(int i = 0; i < 9; i++){
-		board[i] = ' ';
-	}
-}
-
 bool is_number_in_correct_range(int number){
     return number > 0 && number < 10;
 }
@@ -108,7 +101,8 @@ void do_move(char board[], char player){
     board[slot] = player;
 }
 
-void play_game(char board[], char player){
+void play_game(char board[], char start_player){
+    char player = start_player ;
     for(char i = 1; i < 10; i++){
         do_move(board, player);
         if(has_winner(player, board)){
