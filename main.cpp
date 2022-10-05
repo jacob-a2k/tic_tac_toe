@@ -5,8 +5,7 @@ using namespace std;
 
 void show_available_options();      // rysujemy szablon tablicy z ponumerowanymi miejscami
 void draw_a_board(char tab[]);        // pokazujemy plansze z uzupelnionymi polami
-bool set_to_board(int choosen_number,char tab[]);
-bool if_slot_is_empty(int choosen_number, char tab[]);
+bool set_to_board_is_slot_empty(int choosen_number,char tab[]);
 bool test_if_win(char o_or_x, char tab[]);
 void clear_board(char tab[]);
 char change_player(char o_or_x);
@@ -29,7 +28,7 @@ int main(){
 
 				int index = choosen_number - 1;
 
-				if(set_to_board(choosen_number, tab)){
+				if(set_to_board_is_slot_empty(choosen_number, tab)){
 					tab[index] = o_or_x;
 				}
 				else{
@@ -86,26 +85,20 @@ void draw_a_board(char tab[]){            // Wyswietlenie pustej planszy do gry
 }
 
 
-bool if_slot_is_empty(int choosen_number, char tab[]){
+bool set_to_board_is_slot_empty(int choosen_number, char tab[]){
 
-	int  i = choosen_number - 1;
-	if(tab[i] != 'o' && tab[i] != 'x'){     //warunek sprawdzajacy czy w polu jest znak
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-
-// @mwrona wyrzuc te funkcje
-bool set_to_board(int choosen_number,char tab[]){
-
-	if(choosen_number > 0 && choosen_number < 10 ){         // sprawdzanie zakresu wybranej liczby
-        return if_slot_is_empty(choosen_number, tab);
-	}
-	else{
+    if(choosen_number > 0 && choosen_number < 10){      // sprawdzanie zakresu wybranej liczby
+        int  i = choosen_number - 1;
+        if(tab[i] != 'o' && tab[i] != 'x'){             //warunek sprawdzajacy czy w polu jest znak
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    else{
         return false;
-	}
+    }
 }
 
 
