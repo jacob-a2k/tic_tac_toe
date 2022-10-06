@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -25,12 +26,13 @@ int main(){
 void show_available_options(){
     for(int i = 1; i < 17; i++){
         if(i < 4 || i > 4 && i < 8 || i > 8 && i < 12 || i > 12 && i < 16){
+            cout << setw(2);
             cout << i << " | ";
         }
         else if(i % 4 == 0){
             cout << i << "\n";
             if(i != 16){
-                cout << "---------------\n";
+                cout << "-----------------\n";
             }
         }
     }
@@ -44,7 +46,7 @@ void draw_a_board(char board[]){
         else if(i % 3 == 0 || i % 7 == 0 || i % 11 == 0){
             cout << board[i] << "\n";
             if(i != 15){
-                cout << "---------------\n";
+                cout << "--------------\n";
             }
         }
     }
