@@ -4,51 +4,58 @@
 
 using namespace std;
 
-void show_available_options();
-void draw_a_board(char board[]);
+void show_available_options(int column_and_row);
+void draw_a_board(char board[], int column_and_row);
 bool has_winner(char player, char board[]);
 char change_player(char player);
 bool is_number_in_correct_range(int number);
 int try_get_slot(char board[]);
 void do_move(char board[], char player);
-void play_game(char board[], char start_player);
+void play_game(char board[], char start_player, int column_and_row);
+int board_size();
+void create_board_to_game(int all, char tab[]);
 
 int main(){
     char start_player = 'o';
 	for(;;){
-		char board[16] = {' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '};
-		play_game(board, start_player);
+        int column_and_row = board_size();
+        int all = column_and_row * column_and_row;
+        char board[all];
+        create_board_to_game(all, board);
+		play_game(board, start_player, column_and_row);
 		start_player = change_player(start_player);
 	}
 	return 0;
 }
 
-void show_available_options(){
-    for(int i = 1; i < 17; i++){
-        if(i < 4 || i > 4 && i < 8 || i > 8 && i < 12 || i > 12 && i < 16){
+void show_available_options(int c_a_r){
+
+    for(int i = 1; i <= c_a_r * c_a_r; i++){
+    	if(i % c_a_r != 0){
             cout << setw(2);
-            cout << i << " | ";
-        }
-        else if(i % 4 == 0){
-            cout << i << "\n";
-            if(i != 16){
-                cout << "-----------------\n";
-            }
-        }
+    		cout << i << " | ";
+    	}
+    	else if(i % c_a_r == 0){
+    		cout << i << "\n";
+    		if(i != c_a_r * c_a_r){
+    			cout << "---------------------\n";
+    		}
+    	}
     }
 }
 
-void draw_a_board(char board[]){
-    for(int i = 0; i < 16; i++){
-        if(i < 3 || i > 3 && i < 7 || i > 7 && i < 11 || i > 11 && i < 15){
+void draw_a_board(char board[], int c_a_r){
+
+    for(int i = 0; i < c_a_r * c_a_r; i++){
+    	if(    ){                // @abram - nie mam pomyslu na warunek
             cout << board[i] << " | ";
-        }
-        else if(i % 3 == 0 || i % 7 == 0 || i % 11 == 0){
+    	}
+    	else if(   ){               // @abram - nie mam pomyslu na warunek
             cout << board[i] << "\n";
-            if(i != 15){
-                cout << "--------------\n";
+            if(i != (c_a_r * c_a_r) -1){
+                cout << "\n-----------------\n";
             }
-        }
+    	}
     }
 }
 
@@ -76,12 +83,12 @@ bool is_number_in_correct_range(int number){
     return number > 0 && number < 17;
 }
 
-int try_get_slot(char board[]){
+int try_get_slot(char board[], int column_and_row){
     for(;;){
         cout << endl;
-        show_available_options();
+        show_available_options(column_and_row);
         cout << endl;
-        draw_a_board(board);
+        draw_a_board(board,column_and_row);
         cout << "\nWybierz od 1 do 16\n";
         int choosen_number;
         cin >> choosen_number;
@@ -100,17 +107,17 @@ int try_get_slot(char board[]){
     }
 }
 
-void do_move(char board[], char player){
-    int slot = try_get_slot(board);
+void do_move(char board[], char player, int column_and_row){
+    int slot = try_get_slot(board, column_and_row);
     board[slot] = player;
 }
 
-void play_game(char board[], char start_player){
+void play_game(char board[], char start_player, int column_and_row){
     char player = start_player ;
     for(char i = 1; i < 17; i++){
-        do_move(board, player);
+        do_move(board, player, column_and_row);
         if(has_winner(player, board)){
-            draw_a_board(board);
+            draw_a_board(board, column_and_row);
             cout << "\n=================================\n";
             cout << "Wygral " << player << "!\n";
             cout << "=================================\n";
@@ -121,4 +128,17 @@ void play_game(char board[], char start_player){
     cout << "\n=================================\n";
     cout << "Remis\n";
     cout << "=================================\n";
+}
+
+int board_size(){
+    cout << "Witaj!Podaj liczbe kolumn i wierszy na planszy: ";
+    int column_and_row;
+    cin >> column_and_row;
+    return column_and_row;
+}
+
+void create_board_to_game(int all, char tab[]){
+    for(int i = 0; i < all; i++ ){
+        tab[i] = ' ';
+    }
 }
