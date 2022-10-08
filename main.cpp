@@ -47,6 +47,8 @@ void show_available_options(int c_a_r){
 void draw_a_board(char board[], int c_a_r){
 
     for(int i = 0; i < c_a_r * c_a_r; i++){
+							     // @mwrona przeciez funkcje draw_a_board oraz show_available_options
+								 // sa blizniacze wiec mozesz zrobic analogicznie
     	if(    ){                // @abram - nie mam pomyslu na warunek
             cout << board[i] << " | ";
     	}
@@ -129,7 +131,8 @@ void play_game(char board[], char start_player, int column_and_row){
     cout << "Remis\n";
     cout << "=================================\n";
 }
-
+//@mwrona jak masz za kodowane na sztywno sprwdzanie planszy 4x4 to nie pytaj uytkownika o rozmiar 
+//skoro ci nie zadziała pierwszy program mial dzialac w trybie 4x4
 int board_size(){
     cout << "Witaj!Podaj liczbe kolumn i wierszy na planszy: ";
     int column_and_row;
