@@ -70,7 +70,7 @@ bool has_winner(char player, char board[], int c_a_r){
     int z = 0;
 	for(int i = 0; i < c_a_r; i++){         //sprawdzanie w pionie tylu kolumn ile poda uzytkownik
         int j = i;
-		for( j ; j < c_a_r * c_a_r; j + c_a_r){       // komorki tablicy w pionie
+		for( j ; j < (c_a_r * c_a_r - c_a_r); j + c_a_r){       // komorki tablicy w pionie
 			if(board[j] == board[j + c_a_r] && board[j] == player){
                 z++;
 			}
