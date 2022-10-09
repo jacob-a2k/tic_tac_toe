@@ -6,11 +6,11 @@ using namespace std;
 
 void show_available_options(int column_and_row);
 void draw_a_board(char board[], int column_and_row);
-bool has_winner(char player, char board[]);
+bool has_winner(char player, char board[], int column_and_row);
 char change_player(char player);
-bool is_number_in_correct_range(int number);
-int try_get_slot(char board[]);
-void do_move(char board[], char player);
+bool is_number_in_correct_range(int number, int column_and_row);
+int try_get_slot(char board[], int column_and_row);
+void do_move(char board[], char player, int column_and_row);
 void play_game(char board[], char start_player, int column_and_row);
 int board_size();
 void create_board_to_game(int all, char tab[]);
@@ -28,7 +28,7 @@ int main(){
 	return 0;
 }
 
-void show_available_options(int c_a_r){
+void show_available_options(int c_a_r){     // c_a_r == column_and_row
 
     for(int i = 1; i <= c_a_r * c_a_r; i++){
     	if(i % c_a_r != 0){
@@ -66,24 +66,25 @@ char change_player(char player){
     return player == 'o' ? 'x' : 'o';   // operator ternarny "? :"
 }
 
-bool has_winner(char player, char board[]){
-    return  board[0] == board[1]   && board[1]  == board[2]  && board[2]  == board[3]  && board[0]  == player ||
-            board[4] == board[5]   && board[5]  == board[6]  && board[6]  == board[7]  && board[4]  == player ||
-            board[8] == board[9]   && board[9]  == board[10] && board[10] == board[11] && board[8]  == player ||
-            board[12] == board[13] && board[13] == board[14] && board[14] == board[15] && board[12] == player ||
-
-
-            board[0] == board[4]   && board[4]  == board[8]  && board[8]  == board[12]  && board[0]  == player ||
-            board[1] == board[5]   && board[5]  == board[9]  && board[9]  == board[13]  && board[1]  == player ||
-            board[2] == board[6]   && board[6]  == board[10] && board[10] == board[14]  && board[2]  == player ||
-            board[3] == board[7]   && board[7]  == board[11] && board[11] == board[15]  && board[3]  == player ||
-
-            board[0] == board[5]   && board[5]  == board[10] && board[10] == board[15]  && board[0]  == player ||
-            board[3] == board[6]   && board[6]  == board[9]  && board[9]  == board[12]  && board[3]  == player;
+bool has_winner(char player, char board[], int c_a_r){
+    int z = 0;
+	for(int i = 0; i < c_a_r; i++){         //sprawdzanie w pionie tylu kolumn ile poda uzytkownik
+        int j = i;
+		for( j ; j < c_a_r * c_a_r; j + c_a_r){       // komorki tablicy w pionie
+			if(board[j] == board[j + c_a_r] && board[j] == player){
+                z++;
+			}
+		}
+		if(z == (c_a_r -1)){
+            return true;
+		}
+        z = 0;
+	}
+	return false;
 }
 
-bool is_number_in_correct_range(int number){
-    return number > 0 && number < 17;
+bool is_number_in_correct_range(int number, int column_and_row){
+    return number > 0 && number < (column_and_row * column_and_row);
 }
 
 int try_get_slot(char board[], int column_and_row){
@@ -92,11 +93,11 @@ int try_get_slot(char board[], int column_and_row){
         show_available_options(column_and_row);
         cout << endl;
         draw_a_board(board,column_and_row);
-        cout << "\nWybierz od 1 do 16\n";
+        cout << "\nWybierz od 1 do "<<  column_and_row * column_and_row << " \n";
         int choosen_number;
         cin >> choosen_number;
 
-        if(!is_number_in_correct_range(choosen_number)){
+        if(!is_number_in_correct_range(choosen_number, column_and_row)){
             cout << "Bledny ruch!\n";
             continue;
         }
@@ -117,9 +118,9 @@ void do_move(char board[], char player, int column_and_row){
 
 void play_game(char board[], char start_player, int column_and_row){
     char player = start_player ;
-    for(char i = 1; i < 17; i++){
+    for(char i = 1; i < column_and_row * column_and_row; i++){
         do_move(board, player, column_and_row);
-        if(has_winner(player, board)){
+        if(has_winner(player, board, column_and_row)){
             draw_a_board(board, column_and_row);
             cout << "\n=================================\n";
             cout << "Wygral " << player << "!\n";
@@ -132,8 +133,7 @@ void play_game(char board[], char start_player, int column_and_row){
     cout << "Remis\n";
     cout << "=================================\n";
 }
-//@mwrona jak masz za kodowane na sztywno sprwdzanie planszy 4x4 to nie pytaj uytkownika o rozmiar
-//skoro ci nie zadziała pierwszy program mial dzialac w trybie 4x4
+
 int board_size(){
     cout << "Witaj!Podaj liczbe kolumn i wierszy na planszy: ";
     int column_and_row;
