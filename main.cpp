@@ -69,8 +69,7 @@ char change_player(char player){
 bool has_winner(char player, char board[], int c_a_r){
     int z = 0;
 	for(int i = 0; i < c_a_r; i++){         //sprawdzanie w pionie tylu kolumn ile poda uzytkownik
-        int j = i;
-		for( j ; j < (c_a_r * c_a_r - c_a_r); j + c_a_r){       // komorki tablicy w pionie
+		for(int j = i; j < (c_a_r * c_a_r - c_a_r);j = j + c_a_r){       // komorki tablicy w pionie
 			if(board[j] == board[j + c_a_r] && board[j] == player){
                 z++;
 			}
@@ -83,21 +82,21 @@ bool has_winner(char player, char board[], int c_a_r){
 	return false;
 }
 
-bool is_number_in_correct_range(int number, int column_and_row){
-    return number > 0 && number < (column_and_row * column_and_row);
+bool is_number_in_correct_range(int number, int c_a_r){
+    return number > 0 && number <= (c_a_r * c_a_r);
 }
 
-int try_get_slot(char board[], int column_and_row){
+int try_get_slot(char board[], int c_a_r){
     for(;;){
         cout << endl;
-        show_available_options(column_and_row);
+        show_available_options(c_a_r);
         cout << endl;
-        draw_a_board(board,column_and_row);
-        cout << "\nWybierz od 1 do "<<  column_and_row * column_and_row << " \n";
+        draw_a_board(board,c_a_r);
+        cout << "\nWybierz od 1 do "<<  c_a_r * c_a_r << " \n";
         int choosen_number;
         cin >> choosen_number;
 
-        if(!is_number_in_correct_range(choosen_number, column_and_row)){
+        if(!is_number_in_correct_range(choosen_number, c_a_r)){
             cout << "Bledny ruch!\n";
             continue;
         }
@@ -111,17 +110,17 @@ int try_get_slot(char board[], int column_and_row){
     }
 }
 
-void do_move(char board[], char player, int column_and_row){
-    int slot = try_get_slot(board, column_and_row);
+void do_move(char board[], char player, int c_a_r){
+    int slot = try_get_slot(board, c_a_r);
     board[slot] = player;
 }
 
-void play_game(char board[], char start_player, int column_and_row){
+void play_game(char board[], char start_player, int c_a_r){
     char player = start_player ;
-    for(char i = 1; i < column_and_row * column_and_row; i++){
-        do_move(board, player, column_and_row);
-        if(has_winner(player, board, column_and_row)){
-            draw_a_board(board, column_and_row);
+    for(char i = 1; i <= c_a_r * c_a_r; i++){
+        do_move(board, player, c_a_r);
+        if(has_winner(player, board, c_a_r)){
+            draw_a_board(board, c_a_r);
             cout << "\n=================================\n";
             cout << "Wygral " << player << "!\n";
             cout << "=================================\n";
