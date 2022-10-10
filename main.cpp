@@ -80,7 +80,7 @@ bool has_winner(char player, char board[], int c_a_r){
         z = 0;
 	}
 	for(int i = 0; i < (c_a_r * c_a_r); i = i + c_a_r){         // sprawdznie w poziomie tylu kolumn ile poda uzytkownik
-        for(int j = i; j < (i + c_a_r); j++){                   // komurki tablicy w poziomie
+        for(int j = i; j < (i + c_a_r); j++){                   // komorki tablicy w poziomie
             if(board[j] == board[j + 1] && board[j] == player){
                 z++;
             }
@@ -100,7 +100,7 @@ bool has_winner(char player, char board[], int c_a_r){
 	}
 	z = 0;
 
-	for(int i = (c_a_r * c_a_r - c_a_r); i > 0; i = i - (c_a_r -1) ){       //sprawdzenie skosu od lewej do prawej
+	for(int i = (c_a_r * c_a_r - c_a_r); i > c_a_r; i = i - (c_a_r -1) ){       //sprawdzenie skosu od lewej do prawej
         if(board[i] == board[ i - (c_a_r -1) ] && board[i] == player){      //od dolu do gory
             z++;
         }
