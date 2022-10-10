@@ -79,6 +79,37 @@ bool has_winner(char player, char board[], int c_a_r){
 		}
         z = 0;
 	}
+	for(int i = 0; i < (c_a_r * c_a_r); i = i + c_a_r){         // sprawdznie w poziomie tylu kolumn ile poda uzytkownik
+        for(int j = i; j < (i + c_a_r); j++){                   // komurki tablicy w poziomie
+            if(board[j] == board[j + 1] && board[j] == player){
+                z++;
+            }
+        }
+        if(z == (c_a_r -1)){
+            return true;
+        }
+        z = 0;
+	}
+	for(int i = 0; i < c_a_r -1; i++){
+        	if(board[i * (c_a_r + 1)] == board[ ((i + 1) * c_a_r + (i + 1)) ] && board[i] == player){       //sprawdzenie skosu od lewej do prawej
+        		z++;                                                                                        //od gora do dolu
+        	}
+	}
+	if(z == c_a_r -1){
+		return true;
+	}
+	z = 0;
+
+	for(int i = (c_a_r * c_a_r - c_a_r); i > 0; i = i - (c_a_r -1) ){       //sprawdzenie skosu od lewej do prawej
+        if(board[i] == board[ i - (c_a_r -1) ] && board[i] == player){      //od dolu do gory
+            z++;
+        }
+	}
+	if(z == (c_a_r -1) ){
+        return true;
+	}
+	z = 0;
+
 	return false;
 }
 
