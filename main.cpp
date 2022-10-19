@@ -38,7 +38,11 @@ void show_available_options(int c_a_r){     // c_a_r == column_and_row
     	else if(i % c_a_r == 0){
     		cout << i << "\n";
     		if(i != c_a_r * c_a_r){
-    			cout << "---------------------\n";
+                for(int i = 0; i <= c_a_r; i++){
+                    cout << setw(2);
+                    cout << "----";
+                }
+            cout << endl;
     		}
     	}
     }
@@ -48,7 +52,12 @@ void draw_a_board(char board[], int c_a_r){
 	for(int i = 0; i < c_a_r * c_a_r; i++){
         if(i % c_a_r == 0){
             if( i != 0){
-                cout << "\n---------------------\n";
+                cout << endl;
+                for(int i = 0; i <= c_a_r; i++){
+                    cout << setw(2);
+                    cout << "----";
+                }
+            cout << endl;
             }
             cout << setw(2);
             cout << board[i];
