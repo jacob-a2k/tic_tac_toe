@@ -18,12 +18,15 @@ void create_board_to_game(int all, char tab[]);
 int main(){
     char start_player = 'o';
 	for(;;){
+        char *board;
         int column_and_row = board_size();
         int all = column_and_row * column_and_row;
-        char board[all];
+        board = new char[all];
+
         create_board_to_game(all, board);
 		play_game(board, start_player, column_and_row);
 		start_player = change_player(start_player);
+		delete[] board;
 	}
 	return 0;
 }
