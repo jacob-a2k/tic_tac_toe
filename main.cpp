@@ -4,6 +4,11 @@
 
 using namespace std;
 
+struct Board {
+    char *values;
+    int size;
+};
+
 void show_available_options(int column_and_row);
 void draw_a_board(char board[], int column_and_row);
 bool has_winner(char player, char board[], int column_and_row);
@@ -13,20 +18,20 @@ int try_get_slot(char board[], int column_and_row);
 void do_move(char board[], char player, int column_and_row);
 void play_game(char board[], char start_player, int column_and_row);
 int board_size();
-void create_board_to_game(int all, char tab[]);
+void create_board_to_game(Board board);
 
 int main(){
     char start_player = 'o';
 	for(;;){
-        char *board;
-        int column_and_row = board_size();
-        int all = column_and_row * column_and_row;
-        board = new char[all];
+        Board board;
+        board.size = board_size();
+        int all = board.size * board.size;
+        board.values = new char[all];
 
-        create_board_to_game(all, board);
-		play_game(board, start_player, column_and_row);
+        create_board_to_game(board);
+		play_game(board.values, start_player, board.size);
 		start_player = change_player(start_player);
-		delete[] board;
+		delete[] board.values;
 	}
 	return 0;
 }
@@ -183,8 +188,8 @@ int board_size(){
     return column_and_row;
 }
 
-void create_board_to_game(int all, char tab[]){
-    for(int i = 0; i < all; i++ ){
-        tab[i] = ' ';
+void create_board_to_game(Board board){
+    for(int i = 0; i < board.size * board.size; i++ ){
+        board.values[i] = ' ';
     }
 }
