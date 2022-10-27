@@ -11,7 +11,7 @@ struct Board {
 
 void show_available_options(int column_and_row);
 void draw_a_board(char board[], int column_and_row);
-bool has_winner(char player, char board[], int column_and_row);
+bool has_winner(char player, Board board);
 char change_player(char player);
 bool is_number_in_correct_range(int number, int column_and_row);
 int try_get_slot(char board[], int column_and_row);
@@ -83,46 +83,46 @@ char change_player(char player){
     return player == 'o' ? 'x' : 'o';   // operator ternarny "? :"
 }
 
-bool has_winner(char player, char board[], int c_a_r){
+bool has_winner(char player, Board board){
     int z = 0;
-	for(int i = 0; i < c_a_r; i++){         //sprawdzanie w pionie tylu kolumn ile poda uzytkownik
-		for(int j = i; j < (c_a_r * c_a_r - c_a_r);j = j + c_a_r){       // komorki tablicy w pionie
-			if(board[j] == board[j + c_a_r] && board[j] == player){
+	for(int i = 0; i < board.size; i++){         //sprawdzanie w pionie tylu kolumn ile poda uzytkownik
+		for(int j = i; j < (board.size * board.size - board.size);j = j + board.size){       // komorki tablicy w pionie
+			if(board.values[j] == board.values[j + board.size] && board.values[j] == player){
                 z++;
 			}
 		}
-		if(z == (c_a_r -1)){
+		if(z == (board.size -1)){
             return true;
 		}
         z = 0;
 	}
-	for(int i = 0; i < (c_a_r * c_a_r); i = i + c_a_r){         // sprawdznie w poziomie tylu kolumn ile poda uzytkownik
-        for(int j = i; j < (i + c_a_r -1); j++){                   // komorki tablicy w poziomie
-            if(board[j] == board[j + 1] && board[j] == player){
+	for(int i = 0; i < (board.size * board.size); i = i + board.size){         // sprawdznie w poziomie tylu kolumn ile poda uzytkownik
+        for(int j = i; j < (i + board.size -1); j++){                   // komorki tablicy w poziomie
+            if(board.values[j] == board.values[j + 1] && board.values[j] == player){
                 z++;
             }
         }
-        if(z == (c_a_r -1)){
+        if(z == (board.size -1)){
             return true;
         }
         z = 0;
 	}
-	for(int i = 0; i < (c_a_r *c_a_r -1); i = i + (c_a_r + 1)){
-        if(board[i] == board[i + (c_a_r +1)] && board[i] == player){       //sprawdzenie skosu od lewej do prawej
+	for(int i = 0; i < (board.size *board.size -1); i = i + (board.size + 1)){
+        if(board.values[i] == board.values[i + (board.size +1)] && board.values[i] == player){       //sprawdzenie skosu od lewej do prawej
             z++;                                                                                        //od gora do dolu
         }
 	}
-	if(z == (c_a_r -1)){
+	if(z == (board.size -1)){
 		return true;
 	}
 	z = 0;
 
-	for(int i = (c_a_r * c_a_r - c_a_r); i > c_a_r; i = i - (c_a_r -1) ){       //sprawdzenie skosu od lewej do prawej
-        if(board[i] == board[ i - (c_a_r -1) ] && board[i] == player){      //od dolu do gory
+	for(int i = (board.size * board.size - board.size); i > board.size; i = i - (board.size -1) ){       //sprawdzenie skosu od lewej do prawej
+        if(board.values[i] == board.values[ i - (board.size -1) ] && board.values[i] == player){      //od dolu do gory
             z++;
         }
 	}
-	if(z == (c_a_r -1)){
+	if(z == (board.size -1)){
         return true;
 	}
 	z = 0;
@@ -167,7 +167,7 @@ void play_game(Board board, char start_player){
     char player = start_player ;
     for(char i = 1; i <= board.size * board.size; i++){
         do_move(board, player);
-        if(has_winner(player, board.values, board.size)){
+        if(has_winner(player, board)){
             draw_a_board(board.values, board.size);
             cout << "\n=================================\n";
             cout << "Wygral " << player << "!\n";
