@@ -9,12 +9,12 @@ struct Board {
     int size;
 };
 
-void show_available_options(int column_and_row);
+void show_available_options(Board board);
 void draw_a_board(Board board);
 bool has_winner(char player, Board board);
 char change_player(char player);
-bool is_number_in_correct_range(int number, int column_and_row);
-int try_get_slot(char board[], int column_and_row);
+bool is_number_in_correct_range(int number, Board board);
+int try_get_slot(Board board);
 void do_move(Board board, char player);
 void play_game(Board board, char start_player);
 int board_size();
@@ -36,17 +36,17 @@ int main(){
 	return 0;
 }
 
-void show_available_options(int c_a_r){     // c_a_r == column_and_row
+void show_available_options(Board board){     // c_a_r == column_and_row
 
-    for(int i = 1; i <= c_a_r * c_a_r; i++){
-    	if(i % c_a_r != 0){
+    for(int i = 1; i <= board.size * board.size; i++){
+    	if(i % board.size != 0){
             cout << setw(2);
     		cout << i << " | ";
     	}
-    	else if(i % c_a_r == 0){
+    	else if(i % board.size == 0){
     		cout << i << "\n";
-    		if(i != c_a_r * c_a_r){
-                for(int i = 0; i <= c_a_r; i++){
+    		if(i != board.size * board.size){
+                for(int i = 0; i <= board.size; i++){
                     cout << setw(2);
                     cout << "----";
                 }
@@ -130,21 +130,21 @@ bool has_winner(char player, Board board){
 	return false;
 }
 
-bool is_number_in_correct_range(int number, int c_a_r){
-    return number > 0 && number <= (c_a_r * c_a_r);
+bool is_number_in_correct_range(int number, Board board){
+    return number > 0 && number <= (board.size * board.size);
 }
 
 int try_get_slot(Board board){
     for(;;){
         cout << endl;
-        show_available_options(board.size);
+        show_available_options(board);
         cout << endl;
         draw_a_board(board);
         cout << "\nWybierz od 1 do "<<  board.size * board.size << " \n";
         int choosen_number;
         cin >> choosen_number;
 
-        if(!is_number_in_correct_range(choosen_number, board.size)){
+        if(!is_number_in_correct_range(choosen_number, board)){
             cout << "Bledny ruch!\n";
             continue;
         }
