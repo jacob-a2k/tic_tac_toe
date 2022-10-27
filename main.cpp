@@ -16,7 +16,7 @@ char change_player(char player);
 bool is_number_in_correct_range(int number, int column_and_row);
 int try_get_slot(char board[], int column_and_row);
 void do_move(char board[], char player, int column_and_row);
-void play_game(char board[], char start_player, int column_and_row);
+void play_game(Board board, char start_player);
 int board_size();
 void create_board_to_game(Board board);
 
@@ -29,7 +29,7 @@ int main(){
         board.values = new char[all];
 
         create_board_to_game(board);
-		play_game(board.values, start_player, board.size);
+		play_game(board, start_player);
 		start_player = change_player(start_player);
 		delete[] board.values;
 	}
@@ -163,12 +163,12 @@ void do_move(char board[], char player, int c_a_r){
     board[slot] = player;
 }
 
-void play_game(char board[], char start_player, int c_a_r){
+void play_game(Board board, char start_player){
     char player = start_player ;
-    for(char i = 1; i <= c_a_r * c_a_r; i++){
-        do_move(board, player, c_a_r);
-        if(has_winner(player, board, c_a_r)){
-            draw_a_board(board, c_a_r);
+    for(char i = 1; i <= board.size * board.size; i++){
+        do_move(board.values, player, board.size);
+        if(has_winner(player, board.values, board.size)){
+            draw_a_board(board.values, board.size);
             cout << "\n=================================\n";
             cout << "Wygral " << player << "!\n";
             cout << "=================================\n";
