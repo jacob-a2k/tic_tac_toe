@@ -15,7 +15,7 @@ bool has_winner(char player, char board[], int column_and_row);
 char change_player(char player);
 bool is_number_in_correct_range(int number, int column_and_row);
 int try_get_slot(char board[], int column_and_row);
-void do_move(char board[], char player, int column_and_row);
+void do_move(Board board, char player);
 void play_game(Board board, char start_player);
 int board_size();
 void create_board_to_game(Board board);
@@ -158,15 +158,15 @@ int try_get_slot(char board[], int c_a_r){
     }
 }
 
-void do_move(char board[], char player, int c_a_r){
-    int slot = try_get_slot(board, c_a_r);
-    board[slot] = player;
+void do_move(Board board, char player){
+    int slot = try_get_slot(board.values, board.size);
+    board.values[slot] = player;
 }
 
 void play_game(Board board, char start_player){
     char player = start_player ;
     for(char i = 1; i <= board.size * board.size; i++){
-        do_move(board.values, player, board.size);
+        do_move(board, player);
         if(has_winner(player, board.values, board.size)){
             draw_a_board(board.values, board.size);
             cout << "\n=================================\n";
