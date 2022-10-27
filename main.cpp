@@ -10,7 +10,7 @@ struct Board {
 };
 
 void show_available_options(int column_and_row);
-void draw_a_board(char board[], int column_and_row);
+void draw_a_board(Board board);
 bool has_winner(char player, Board board);
 char change_player(char player);
 bool is_number_in_correct_range(int number, int column_and_row);
@@ -56,25 +56,25 @@ void show_available_options(int c_a_r){     // c_a_r == column_and_row
     }
 }
 
-void draw_a_board(char board[], int c_a_r){
-	for(int i = 0; i < c_a_r * c_a_r; i++){
-        if(i % c_a_r == 0){
+void draw_a_board(Board board){
+	for(int i = 0; i < board.size * board.size; i++){
+        if(i % board.size == 0){
             if( i != 0){
                 cout << endl;
-                for(int i = 0; i <= c_a_r; i++){
+                for(int i = 0; i <= board.size; i++){
                     cout << setw(2);
                     cout << "----";
                 }
             cout << endl;
             }
             cout << setw(2);
-            cout << board[i];
+            cout << board.values[i];
         }
-        else if(i % c_a_r != 0){
+        else if(i % board.size != 0){
             cout << setw(2);
             cout << " | ";
             cout << setw(2);
-            cout << board[i];
+            cout << board.values[i];
         }
 	}
 }
@@ -134,23 +134,23 @@ bool is_number_in_correct_range(int number, int c_a_r){
     return number > 0 && number <= (c_a_r * c_a_r);
 }
 
-int try_get_slot(char board[], int c_a_r){
+int try_get_slot(Board board){
     for(;;){
         cout << endl;
-        show_available_options(c_a_r);
+        show_available_options(board.size);
         cout << endl;
-        draw_a_board(board,c_a_r);
-        cout << "\nWybierz od 1 do "<<  c_a_r * c_a_r << " \n";
+        draw_a_board(board);
+        cout << "\nWybierz od 1 do "<<  board.size * board.size << " \n";
         int choosen_number;
         cin >> choosen_number;
 
-        if(!is_number_in_correct_range(choosen_number, c_a_r)){
+        if(!is_number_in_correct_range(choosen_number, board.size)){
             cout << "Bledny ruch!\n";
             continue;
         }
         int index = choosen_number - 1;
 
-        if(board[index] != ' '){
+        if(board.values[index] != ' '){
             cout << "Bledny ruch!\n";
             continue;
         }
@@ -159,7 +159,7 @@ int try_get_slot(char board[], int c_a_r){
 }
 
 void do_move(Board board, char player){
-    int slot = try_get_slot(board.values, board.size);
+    int slot = try_get_slot(board);
     board.values[slot] = player;
 }
 
@@ -168,7 +168,7 @@ void play_game(Board board, char start_player){
     for(char i = 1; i <= board.size * board.size; i++){
         do_move(board, player);
         if(has_winner(player, board)){
-            draw_a_board(board.values, board.size);
+            draw_a_board(board);
             cout << "\n=================================\n";
             cout << "Wygral " << player << "!\n";
             cout << "=================================\n";
